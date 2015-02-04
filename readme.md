@@ -44,7 +44,7 @@ Below is what Insight is capable of tracking. Individual implementation can choo
 ### Google Analytics
 
 ```js
-var Insight = require('insight');
+var Insight = require('anonymous-insight');
 var pkg = require('./package.json');
 
 var insight = new Insight({
@@ -53,11 +53,6 @@ var insight = new Insight({
 	pkg: pkg
 });
 
-// ask for permission the first time
-if (insight.optOut === undefined) {
-	return insight.askPermission();
-}
-
 insight.track('foo', 'bar');
 // recorded in Analytics as `/foo/bar`
 ```
@@ -65,7 +60,7 @@ insight.track('foo', 'bar');
 ### Yandex.Metrica
 
 ```js
-var Insight = require('insight');
+var Insight = require('anonymous-insight');
 var pkg = require('./package.json');
 
 var insight = new Insight({
@@ -74,11 +69,6 @@ var insight = new Insight({
 	trackingProvider: 'yandex',
 	pkg: pkg
 });
-
-// ask for permission the first time
-if (insight.optOut === undefined) {
-	return insight.askPermission();
-}
 
 insight.track('foo', 'bar');
 // recorded in Yandex.Metrica as `http://<package-name>.insight/foo/bar`
@@ -138,20 +128,6 @@ synchronous methods:
 Accepts keywords which ends up as a path in Analytics.
 
 `.track('init', 'backbone')` becomes `/init/backbone`
-
-#### .askPermission([message, callback])
-
-Asks the user permission to opt-in to tracking and sets the `optOut` property in `config`. You can also choose to set `optOut` property in `config` manually.
-
-![askPermission screenshot](screenshot-askpermission.png)
-
-Optionally supply your own `message` and `callback`. If `message` is `null`, default message will be used. The callback will be called with the arguments `error` and `optIn` when the prompt is done, and is useful for when you want to continue the execution while the prompt is running.
-
-
-#### .optOut
-
-Returns a boolean whether the user has opted out of tracking. Should preferably only be set by a user action, eg. a prompt.
-
 
 ## License
 
